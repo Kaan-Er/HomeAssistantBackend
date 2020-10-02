@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,4 +32,10 @@ public class ToolController {
             return toolRepository.save(newTool);
         }).orElseThrow(() -> new NotFoundException("Room not found!"));
     }
+
+    @DeleteMapping("/tools/{toolId}") //http://localhost:8080/api/tools/{toolId}
+    public void deleteTool(@PathVariable Long toolId) {toolRepository.deleteById(toolId);}
+
+   /* @PatchMapping("/tools/{toolId}")
+    public */
 }

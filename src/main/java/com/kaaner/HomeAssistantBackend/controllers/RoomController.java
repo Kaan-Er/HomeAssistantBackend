@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -25,11 +26,12 @@ public class RoomController {
     public List<Room> getByUserId(@PathVariable Long userId){return roomRepository.findByUsersId(userId);}
 
     @PostMapping("/{userId}/rooms") //http://localhost:8080/api/1/rooms
-    public Room addRoom(@PathVariable Long userId, @Valid @RequestBody Room newRoom) throws NotFoundException {
+    public Room addRoom(@PathVariable Long userId, @Valid @RequestBody Room newRoom) throws NotFoundException{
         return userRepository.findById(userId).map(user -> {
             newRoom.setUsers(user);
             return roomRepository.save(newRoom);
         }).orElseThrow(() -> new NotFoundException("User not found!"));
+
     }
 
 }
